@@ -14,7 +14,7 @@ export default defineConfig({
     port: 5173
   },
   preview: {
-    // Allow Railway (and any host) to access preview server
-    allowedHosts: "all"
+    // Allow Railway host to access preview server (true = any host)
+    allowedHosts: true
   }
 });
