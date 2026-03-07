@@ -1,10 +1,31 @@
 import React from "react";
+import { StoreProvider, useStore } from "./store";
+import { Home } from "./views/Home";
+import { NewWorkout } from "./views/NewWorkout";
+import { WorkoutEditor } from "./views/WorkoutEditor";
 
-export const App: React.FC = () => {
+const BackIcon = () => (
+  <svg width="10" height="16" viewBox="0 0 10 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="8,1 2,8 8,15" />
+  </svg>
+);
+
+const Shell: React.FC = () => {
+  const { state, dispatch } = useStore();
+  const isHome = state.view.kind === "home";
+
+  const goBack = () => dispatch({ type: "NAVIGATE", view: { kind: "home" } });
+
   return (
     <div className="app">
       <header className="top-bar">
-        <button className="top-bar-back">Cerrar</button>
+        {isHome ? (
+          <button className="top-bar-back">Cerrar</button>
+        ) : (
+          <button className="top-bar-back" onClick={goBack}>
+            <BackIcon /> Atrás
+          </button>
+        )}
         <div className="top-bar-title">
           <span className="top-bar-main">WORKOUT JOURNAL</span>
           <span className="top-bar-sub">miniapp</span>
@@ -12,65 +33,15 @@ export const App: React.FC = () => {
         <button className="top-bar-menu">⋯</button>
       </header>
 
-      <main className="content">
-        <section className="hero">
-          <p className="hero-kicker">
-            ARE YOU{" "}
-            <span className="hero-kicker-ready">
-              READY
-            </span>
-            ?
-          </p>
-          <div className="hero-metrics">
-            <div className="metric">
-              <span className="metric-label">1 WORKOUT</span>
-            </div>
-            <div className="metric">
-              <span className="metric-label">LAST 2 DAYS AGO</span>
-            </div>
-            <div className="metric">
-              <span className="metric-label">1 THIS WEEK</span>
-            </div>
-          </div>
-        </section>
-
-        <section className="weekly-goal-card glass">
-          <div className="weekly-goal-progress">
-            <div className="circle">
-              <span className="circle-value">1</span>
-            </div>
-          </div>
-          <div className="weekly-goal-text">
-            <p className="weekly-goal-label">WEEKLY GOAL</p>
-            <p className="weekly-goal-sub">1 OF 3 WORKOUTS</p>
-          </div>
-        </section>
-
-        <section className="new-workout-card glass">
-          <div>
-            <p className="new-workout-title">NEW WORKOUT</p>
-            <p className="new-workout-sub">START YOUR TRAINING SESSION NOW</p>
-          </div>
-          <button className="new-workout-cta" aria-label="Start workout">
-            &gt;
-          </button>
-        </section>
-
-        <section className="grid">
-          <button className="grid-item glass">
-            <span className="grid-label">HISTORY</span>
-          </button>
-          <button className="grid-item glass">
-            <span className="grid-label">STATISTICS</span>
-          </button>
-          <button className="grid-item glass">
-            <span className="grid-label">ACHIEVEMENTS</span>
-          </button>
-          <button className="grid-item glass">
-            <span className="grid-label">CARDIO</span>
-          </button>
-        </section>
-      </main>
+      {state.view.kind === "home" && <Home />}
+      {state.view.kind === "new-workout" && <NewWorkout />}
+      {state.view.kind === "editor" && <WorkoutEditor workoutId={state.view.workoutId} />}
     </div>
   );
 };
+
+export const App: React.FC = () => (
+  <StoreProvider>
+    <Shell />
+  </StoreProvider>
+);
