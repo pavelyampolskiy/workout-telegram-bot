@@ -65,17 +65,14 @@ export const NewWorkout: React.FC = () => {
       id: uid(),
       name: "Cardio",
       templateId: "cardio",
-      exercises: [
-        { id: uid(), name: "Running", sets: [{ reps: 1, weight: 0 }] },
-        { id: uid(), name: "Jump Rope", sets: [{ reps: 1, weight: 0 }] },
-      ],
+      exercises: [],
       status: "in-progress",
       createdAt: Date.now(),
       completedAt: null,
     };
 
     dispatch({ type: "START_WORKOUT", workout });
-    dispatch({ type: "NAVIGATE", view: { kind: "editor", workoutId: workout.id } });
+    dispatch({ type: "NAVIGATE", view: { kind: "cardio", workoutId: workout.id } });
   };
 
   const handleAddTemplate = () => {

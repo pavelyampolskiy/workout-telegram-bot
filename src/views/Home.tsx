@@ -88,7 +88,15 @@ export const Home: React.FC = () => {
 
   const continueWorkout = () => {
     if (inProgress) {
-      dispatch({ type: "NAVIGATE", view: { kind: "editor", workoutId: inProgress.id } });
+      const isCardio =
+        inProgress.templateId === "cardio" ||
+        inProgress.name.toLowerCase() === "cardio";
+      dispatch({
+        type: "NAVIGATE",
+        view: isCardio
+          ? { kind: "cardio", workoutId: inProgress.id }
+          : { kind: "editor", workoutId: inProgress.id },
+      });
     }
   };
 

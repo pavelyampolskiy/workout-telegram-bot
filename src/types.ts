@@ -29,4 +29,5 @@ export interface WorkoutTemplate {
 export type View =
   | { kind: "home" }
   | { kind: "new-workout" }
-  | { kind: "editor"; workoutId: string };
+  | { kind: "editor"; workoutId: string }
+  | { kind: "cardio"; workoutId: string };
