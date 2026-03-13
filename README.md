@@ -1,6 +1,6 @@
 ## Workout Journal Telegram Mini App
 
-This project is a small React + Vite front-end that recreates the **Workout Journal** mini app UI, suitable for embedding as a Telegram Web App.
+This project is a standalone React + Vite front-end (local state, no backend). **The main Telegram workout app is developed in the [workout-telegram](https://github.com/pavelyampolskiy/workout-telegram) repository** (bot + API + webapp). Use that repo for the live Mini App; this one is for reference or alternate UI experiments.
 
 ### Auto-deploy (GitHub Pages)
 
