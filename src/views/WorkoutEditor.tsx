@@ -12,11 +12,15 @@ const SetRow: React.FC<{
     <span className="set-number">{index + 1}</span>
     <input
       className="set-input"
-      type="number"
-      inputMode="numeric"
+      type="text"
+      inputMode="decimal"
       placeholder="0"
-      value={set.weight || ""}
-      onChange={(e) => onChange({ ...set, weight: Number(e.target.value) || 0 })}
+      value={set.weight === 0 ? "" : String(set.weight).replace(".", ",")}
+      onChange={(e) => {
+        const raw = e.target.value.replace(",", ".");
+        const n = Number(raw);
+        onChange({ ...set, weight: Number.isFinite(n) ? n : 0 });
+      }}
     />
     <span className="set-unit">kg</span>
     <span className="set-x">×</span>
